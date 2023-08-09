@@ -1,0 +1,105 @@
+<!-- Profile Follower Following About Me + DOB 
+Total post All personal posts -->
+{% extends "base.html" %}
+{% block content %}
+<main >
+  <div class="container mt-4">
+      <div class="row">
+        <div class="card col-3" style="height: fit-content;">
+          <div class="card-body px-0">
+                  <img  src="{{url_for('static', filename='images/{}'.format(user.dp))}}" alt="Profile Image" class="card-img-top mb-1" >
+                  <div class="d-flex justify-content-between mb-1">
+                    <h2>{{user.username}}</h2>
+                    {% if user != current_user %}
+                    {% if not current_user.is_following(user) %}
+                        <span class="p-1"><a class="btn btn-sm btn-primary" href="{{ url_for('follow', username=user.username) }}">Follow</a></span>
+                    {% else %}
+                        <span class="p-1"><a class="btn btn-sm btn-primary" href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a></span>
+                    {% endif %}
+                  {% endif %}
+                  </div>
+                  {% if user.bio %}
+                  <p class="mt-2">{{user.bio}}</p>
+                  {% endif %}
+                  <div class="row bg-light rounded-3 p-1">
+                      <div class="col-4">
+                          <b>Posts</b><br>
+                          <b>{{posts_count}}</b>
+                      </div>
+                      <div class="col-4">
+                          <a href="{{url_for('followers', username=user.username)}}">Followers</a><br>
+                          <b>{{followers_count}}</b>
+                      </div>
+                      <div class="col-4">
+                        <a href="{{url_for('following', username=user.username)}}">Following</a><br>
+                          <b>{{following_count}}</b>
+                      </div>
+                  </div>
+                  <!-- <p class="mt-2">User Since : {{user.join_date.strftime('%d %b %Y')}}</p> -->
+                  
+                  
+                  {% if user == current_user %}
+                      <div class="text-center mt-3 d-flex justify-content-between">
+                      <a href="{{ url_for('update_user') }}" class="btn btn-outline-primary">Edit your profile</a>
+                      <!-- <a href=""><i class="fa-solid fa-trash p-2"></i></a></div> -->
+                      <!-- Show a delete icon for the post -->
+                      <form action="{{ url_for('delete_user') }}" method="post" onsubmit="return confirm('Are you sure you want to delete this account?');">
+                        <button type="submit" class="btn btn-link p-2"><i class="fa-solid fa-trash"></i></button>
+                      </form>
+                      </div>
+                  {% endif %}
+                  <div class="text-center mt-4"><span class="bg-light rounded p-1">Joined {{user.join_date.strftime('%b %Y')}}</span></div>
+          </div>
+        </div>
+      <div class="col-7">
+        <h2 class="text-center">My Posts</h2>
+        {% if posts %}
+        {% for post in posts %}
+          <div class="card mb-2">
+
+            <div class="card-body d-flex align-items-start">
+              
+              <img  src="{{url_for('static', filename='images/{}'.format(post.author.dp))}}" class="rounded-circle mr-3" width="50" height="50" alt="Profile Image">
+              <div>
+                <h5 class="card-title font-weight-bold px-1"><a href="{{ url_for('user', username=post.author.username) }}">{{post.author.username}}</a></h5>
+                <p class="card-subtitle text-muted px-1">{{post.timestamp.strftime('%d %B %Y %I:%M %p')}}</p>
+
+
+                <p class="card-text lead my-1">{{post.title}}</p>
+                <img src="{{url_for('static', filename='images/{}'.format(post.image))}}" class="img-fluid" alt="Post Image">
+                <!-- <img src="{{url_for('static', filename='images/{{ post.image }}')}}" class="img-fluid" alt="Post Image"> -->
+                <p class="card-text mt-3">{{post.body}}</p>
+                <!-- <div class="d-flex justify-content-between align-items-center"> -->
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="div">
+                      <a href="{{url_for('like', post_id=post.id)}}"><i class="fa-sharp fa-solid fa-thumbs-up"></i></a>
+                      <b> {{post.likes | length}} </b>
+                      <a href="{{url_for('unlike', post_id=post.id)}}"><i class="fa-solid fa-thumbs-down"></i></a>
+                    </div>
+                    <div>
+                      <a class="btn--outline-secondary" href="{{ url_for('comment', post_id=post.id)}}"><i class="fa-solid fa-comment"></i></a>
+                    <b>{{post.comments | length}}</b>
+                    </div>
+                  </div>
+                <!-- </div> -->
+
+                
+              </div>
+              <div class="d-flex justify-content-end">
+                <a href="{{url_for('update_post', post_id=post.id)}}" class="p-2"><i class="fa-solid fa-pen-to-square"></i></a>
+                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');"><button type="submit" class="btn btn-link p-2"><i class="fas fa-trash-alt"></i></button></form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        {% else %}
+          <div>
+            <img src="{{ url_for('static', filename='image/empty.png') }}" class="card-img-top" height="250px" alt="">
+          <h5 class="text-center">You haven't posted anything. Go to <a href="{{url_for('index')}}">home page</a> and post something to engage with others</h5>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

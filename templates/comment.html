@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row mt-1" style="margin: auto;">
+    <div class="col-lg-7" >
+        {% include 'post.html' %}  
+    </div>
+    <div class="col-lg-5 bg-light">
+            <div class="d-flex flex-row align-items-start">
+                <img  src="{{url_for('static', filename='images/{}'.format(current_user.dp))}}" class="rounded-circle mr-3 p-2" width="50" height="50" alt="Profile Image">
+                <form action="{{url_for('comment', post_id=post.id)}}" method="post" class="d-flex flex-row p-1 mx-2">
+                    {{ form.csrf_token }}
+                    {{form.content(class="form-control mx-2")}} 
+                    {{form.submit(class="btn btn-primary")}}
+                </form>
+            </div>
+        <hr>
+        {% for comment in all_comments %}
+        <div class="d-flex justify-content-between">
+            <div class="d-flex flex-row">
+                <div class="">
+                    {% set user = User.query.get(comment.user_id) %}
+                    <img  src="{{url_for('static', filename='images/{}'.format(user.dp))}}" class="rounded-circle mr-3 p-2" width="50" height="50" alt="Profile Image">
+                    {{user.username}}
+                </div>
+                <div class="mt-2 lead" style="margin-left: 50px;">{{comment.content}}</div>
+            </div>
+            <div>
+                {% if comment.user_id == current_user.id %}
+            <form action="{{ url_for('delete_comment', comment_id=comment.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                <button type="submit" class="btn btn-link p-2"><i class="fa-solid fa-trash"></i></button>
+            </form>
+            {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

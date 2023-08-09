@@ -1,0 +1,418 @@
+openapi: 3.0.0
+info:
+  title: BlogLite API
+  version: 1.0.0
+  description: |
+    API Documentation for CRUD operations on User and Post
+    
+servers:
+  - url: http://127.0.0.1:5000/
+tags:
+  - name: user
+    description: Everything about users
+  - name: post
+    description: Everything about posts
+    
+    
+    
+paths:
+  /api/users/{id}:
+    get:
+      tags : 
+        - user
+      summary: Get a user by id
+      description: Returns a user with the given id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: id of the user 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  username:
+                    type: string
+                    example: sachin
+                  email:
+                    type: string
+                    example: sachin@example.com
+                  dp:
+                    type: string
+                    example: sachin.jpg
+                  bio:
+                    type: string
+                    example: Web Developer at alpha.inc
+                  join_date:
+                    type: string
+                    example: Fri, 13 Jan 2023 09:38:42 -0000
+        '400':
+          description: Invalid Input.
+        '404':
+          description: User not found.
+        '500':
+          description: Internal Server Error.
+          
+    put:
+      tags : 
+        - user
+      summary: Update a user by id
+      description: Operation to update the user detail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                    type: string
+                    example: rohit
+                email:
+                  type: string
+                  example: rohit@example2.org
+                dp:
+                  type: string
+                  example: rohit.jpg
+                bio:
+                  type: string
+                  example: Graphic Designer
+      responses:
+        '200':
+          description: Successfuly updated.
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  username:
+                    type: string
+                    example: rohit
+                  email:
+                    type: string
+                    example: rohit@example2.org
+                  dp:
+                    type: string
+                    example: rohit.jpg
+                  bio:
+                    type: string
+                    example: Graphic Designer
+                  join_date:
+                    type: string
+                    example: Fri, 13 Jan 2023 09:40:15 -0000
+        '400':
+          description: User already exists
+        '404':
+          description: Resource you requested to update not found
+        '500':
+          description: Internal Server Error
+      
+    delete:
+      tags : 
+          - user
+      summary: Delete a user by id
+      description: Operation to delete the user.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '204':
+          description: Successfully Deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User deleted successfully
+        '404':
+          description: User does not exist.
+        '500':
+          description: Intenal Server Error.      
+      
+      
+      
+
+  /api/users:
+    post:
+      tags : 
+        - user
+      summary: Create a new user
+      description: Creates a new user with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: user object
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: shivam
+                email:
+                  type: string
+                  example: shivam@example.com
+                dp:
+                  type: string
+                  example: shivam.jpg
+                bio:
+                  type: string
+                  example: Graphic Designer
+      responses:
+        '201':
+          description: Successfully Created.
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 26
+                  username:
+                    type: string
+                    example: shivam
+                  email:
+                    type: string
+                    example: shivam@example.com
+                  dp:
+                    type: string
+                    example: shivam.jpg
+                  bio:
+                    type: string
+                    example: Graphic Designer
+                  join_date:
+                    type: string
+                    example: Fri, 13 Jan 2023 09:40:15 -0000
+        '409':
+          description: username already exist.
+        '500':
+          description: Internal Server Error.
+
+
+
+
+  /api/post/{id}:
+    get:
+      tags : 
+        - post
+      summary: Get a post by id
+      description: Returns a post with the given id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: id of the post 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: post object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: AOT
+                  body:
+                    type: string
+                    example: Armored titan vs attack titan
+                  image:
+                    type: string
+                    example: aot.jpg
+                  timestamp:
+                    type: string
+                    example: Fri, 13 Jan 2023 09:38:42 -0000
+                  author:
+                    type: object
+                    example: <User sachin>
+        '400':
+          description: Invalid Input.
+        '404':
+          description: Post not found.
+        '500':
+          description: Internal Server Error.
+          
+    put:
+      tags : 
+        - post
+      summary: Update a post by id
+      description: Operation to update the post detail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                    type: string
+                    example: Attack on Titans
+                body:
+                  type: string
+                  example: Attack Titan vs Armored Titan
+                image:
+                  type: string
+                  example: aot2.jpg
+      responses:
+        '200':
+          description: Successfuly updated.
+          content:
+            application/json:
+              schema:
+                title: post object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: Attack on Titans
+                  body:
+                    type: string
+                    example: Attack Titan vs Armored Titan
+                  image:
+                    type: string
+                    example: aot2.jpg
+                  timestamp:
+                    type: string
+                    example: Fri, 13 Jan 2023 09:38:42 -0000
+                  author:
+                    type: object
+                    example: <User sachin>
+        '404':
+          description: Post not found
+        '500':
+          description: Internal Server Error
+      
+    delete:
+      tags : 
+          - post
+      summary: Delete a post by id
+      description: Operation to delete a post.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '204':
+          description: Successfully Deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Post deleted successfully
+        '404':
+          description: Post not found.
+        '500':
+          description: Intenal Server Error.      
+      
+      
+      
+
+  /api/post:
+    post:
+      tags : 
+        - post
+      summary: Create a new post
+      description: Creates a new post with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: post object
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: AOT
+                body:
+                  type: string
+                  example: Armored titan vs attack titan
+                image:
+                  type: string
+                  example: aot.jpg
+                user_id:
+                  type: integer
+                  example: 2
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: post object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: AOT
+                  body:
+                    type: string
+                    example: Armored titan vs attack titan
+                  image:
+                    type: string
+                    example: aot.jpg
+                  timestamp:
+                    type: string
+                    example: Fri, 13 Jan 2023 09:38:42 -0000
+                  author:
+                    type: object
+                    example: <User sachin>
+        
+      
+        '500':
+          description: Internal Server Error.
+  

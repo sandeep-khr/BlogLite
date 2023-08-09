@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-6">
+            <h3 class="text-center">Trending News</h3><hr>
+    {% for headline in headlines %}
+        <!--Section: News of the day-->
+        <div class="row">
+            <div class="col-6 mb-2">
+                <img src="{{headline.urlToImage}}" class="img-fluid" />
+            </div>
+            <div class="col-6 mb-2">
+            <h4><strong>{{headline.title}}</strong></h4>
+            <p class="text-muted">{{headline.description}}</p>
+            <a class="btn btn-primary" href="{{headline.url}}">Read more</a>
+            </div>
+        </div>
+    {% endfor %}
+        </div>
+
+        <div class="col-6">
+            <div>
+                <h3>Popular Posts</h3><hr>
+                {% for post in top_posts %}
+                    {% include 'post.html' %}
+                {% endfor %}
+            </div>
+            
+        </div>
+        <!-- <div class="col-2">
+            <div><h3>Most followed </h3></div><hr>
+        </div> -->
+    </div>
+
+{% endblock %}

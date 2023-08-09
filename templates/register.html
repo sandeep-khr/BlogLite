@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="mx-3">
+  <div class="row d-flex justify-content-center mt-4 " >
+    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+      <div class="card shadow" style="border-radius: 15px;">
+        <div class="card-body p-5">
+          <form action="{{ url_for('register') }}" method="post" novalidate enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <h2 class="text-center mb-3">Create an Account</h2>
+
+            <div class="mb-2">
+              {{ form.username(size=32, class="form-control form-control-md", id="username")}}
+              <label class="form-label" for="username">Username</label>
+              <ul>
+                {% for error in form.username.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="mb-2">
+              {{ form.email(size=64, class="form-control form-control-md", id="email")}}
+              <label class="form-label" for="email">Your Email</label>
+              <ul>
+                {% for error in form.email.errors %}
+                <li style="color: red;">{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="row">
+                <div class="col mb-2" >
+                  {{ form.password(size=64, class="form-control", id="password")}}
+                  <label class="form-label" for="password">Password</label>
+                  <ul>
+                    {% for error in form.password.errors %}
+                    <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="col mb-2">
+                  {{ form.password2(size=64, class="form-control", id="repeat_password")}}
+                  <label class="form-label" for="repeat_password">Repeat your password</label>
+                  <ul>
+                    {% for error in form.password.errors %}
+                    <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+            </div>
+
+            <div class="mb-2">
+              {{ form.dp(class="form-control", id="dp")}}
+              <label class="form-label font-weight-bold" for="dp">Upload your Profile picture</label>
+              <ul>
+                {% for error in form.dp.errors %}
+                <li style="color: red;">{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div> 
+
+            <div class="d-flex justify-content-center">
+              <!-- <button type="button"class="btn btn-outline-primary btn-lg">Sign Up</button> -->
+              {{form.submit(class="btn btn-outline-primary btn-lg")}}
+            </div>
+
+            <p class="text-center mt-2">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+
+
+
+
+
