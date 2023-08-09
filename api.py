@@ -138,3 +138,90 @@ class PostAPI(Resource):
         }, 204
 
 api.add_resource(PostAPI, '/api/post', '/api/post/<int:id>')
+
+class LikeAPI(Resource):
+    def post(self):
+        args = request.json
+        user_id = args.get('user_id')
+        post_id = args.get('post_id')
+        if user_id is None or post_id is None:
+            abort(400, message='Missing user_id or post_id')
+        
+        like = Like.query.filter_by(user_id=user_id, post_id=post_id).first()
+        if like:
+            abort(409, message='Like already exists')
+        
+        new_like = Like(user_id=user_id, post_id=post_id)
+        db.session.add(new_like)
+        db.session.commit()
+        
+        return {
+            'message': 'Like added successfully',
+            'like': {
+                'user_id': user_id,
+                'post_id': post_id
+            }
+        }, 201
+
+    def delete(self):
+        args = request.json
+        user_id = args.get('user_id')
+        post_id = args.get('post_id')
+        if user_id is None or post_id is None:
+            abort(400, message='Missing user_id or post_id')
+        
+        like = Like.query.filter_by(user_id=user_id, post_id=post_id).first()
+        if not like:
+            abort(404, message='Like not found')
+        
+        db.session.delete(like)
+        db.session.commit()
+        
+        return {
+            'message': 'Like removed successfully'
+        }, 204
+
+api.add_resource(LikeAPI, '/api/like')
+
+
+class CommentAPI(Resource):
+    def post(self):
+        args = request.json
+        user_id = args.get('user_id')
+        post_id = args.get('post_id')
+        content = args.get('content')
+        if user_id is None or post_id is None or content is None:
+            abort(400, message='Missing user_id, post_id, or content')
+        
+        new_comment = Comment(user_id=user_id, post_id=post_id, content=content)
+        db.session.add(new_comment)
+        db.session.commit()
+        
+        return {
+            'message': 'Comment added successfully',
+            'comment': {
+                'user_id': user_id,
+                'post_id': post_id,
+                'content': content
+            }
+        }, 201
+
+    def delete(self):
+        args = request.json
+        user_id = args.get('user_id')
+        post_id = args.get('post_id')
+        if user_id is None or post_id is None:
+            abort(400, message='Missing user_id or post_id')
+        
+        comment = Comment.query.filter_by(user_id=user_id, post_id=post_id).first()
+        if not comment:
+            abort(404, message='Comment not found')
+        
+        db.session.delete(comment)
+        db.session.commit()
+        
+        return {
+            'message': 'Comment removed successfully'
+        }, 204
+
+api.add_resource(CommentAPI, '/api/comment')
