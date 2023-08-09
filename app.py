@@ -4,6 +4,7 @@ from flask_uploads import configure_uploads
 from forms import *
 from models import *
 import os
+from dotenv import load_dotenv
 import requests
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask_uploads import configure_uploads
@@ -11,9 +12,10 @@ from sqlalchemy import func
 from api import api
 
 app = Flask(__name__)
+load_dotenv()
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
-app.config['SECRET_KEY'] = 'asddsglkjkl'
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URI')
 db.init_app(app)
 app.app_context().push()
 db.create_all()
@@ -81,7 +83,7 @@ def logout():
 
 @app.route('/explore')
 def explore():
-    API_KEY = '261aca2698ca4bc0957e606fe5f16ae5'
+    API_KEY = os.getenv('API_KEY')
     ENDPOINT_URL = 'https://newsapi.org/v2/top-headlines'
     params = {'country': 'in','apiKey': API_KEY, 'category':'technology'}
     response = requests.get(ENDPOINT_URL, params=params)

@@ -9,21 +9,17 @@
                   <div class="form-row">
                     <div class="form-group col-md-6 mb-3">
                       <label for="email" class="font-weight-bold text-left">Email</label>
-                      <!-- <input type="text" class="form-control" id="title" placeholder="Enter post title"> -->
                       {{form.email(class="form-control", id="email")}}
                     </div>
                     <div class="form-group col-md-6 mb-3">
                       <label for="dp" class="form-label font-weight-bold">Profile Image</label>
-                      <!-- <input type="file" class="form-control-file" id="post-image"> -->
                       {{form.dp(class="form-control-file", id="dp")}}
                     </div>
                   </div>
                   <div class="form-group mb-2">
                     <label for="bio" class="font-weight-bold">Bio</label>
-                    <!-- <textarea class="form-control" id="post-description" rows="3" placeholder="Enter post description"></textarea> -->
                     {{form.bio(class="form-control", id="bio")}}
                   </div>
-                  <!-- <button type="submit" class="btn btn-primary btn-block mt-3">Post</button> -->
                   {{ form.submit(size=64, class="btn btn-outline-primary btn-lg mt-3")}}
               </form>
         </div>

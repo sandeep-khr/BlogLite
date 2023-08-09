@@ -9,21 +9,17 @@
                   <div class="form-row">
                     <div class="form-group col-md-6 mb-3">
                       <label for="title" class="font-weight-bold text-left">Post Title</label>
-                      <!-- <input type="text" class="form-control" id="title" placeholder="Enter post title"> -->
                       {{form.title(class="form-control", id="title")}}
                     </div>
                     <div class="form-group col-md-6 mb-3">
                       <label for="post-image" class="form-label font-weight-bold">Post Image</label>
-                      <!-- <input type="file" class="form-control-file" id="post-image"> -->
                       {{form.image(class="form-control-file", id="post-image")}}
                     </div>
                   </div>
                   <div class="form-group mb-2">
                     <label for="post-description" class="font-weight-bold">Post Description</label>
-                    <!-- <textarea class="form-control" id="post-description" rows="3" placeholder="Enter post description"></textarea> -->
                     {{form.description(class="form-control", id="post-description")}}
                   </div>
-                  <!-- <button type="submit" class="btn btn-primary btn-block mt-3">Post</button> -->
                   {{ form.submit(size=64, class="btn btn-outline-primary btn-lg mt-3")}}
               </form>
         </div>

@@ -10,26 +10,21 @@
             {{ form.csrf_token }}
             <h2 class="text-center mb-4">Log In</h2>
             <div class="mb-2">
-              <!-- <input type="text" id="form3Example1cg" class="form-control form-control-md" /> -->
               {{ form.username(size=64, class="form-control form-control-md", id="username")}}
               <label class="form-label" for="username">Username</label>
             </div>
 
             <div class="mb-2">
-                <!-- <input type="text" id="form3Example1cg" class="form-control form-control-md" /> -->
                 {{ form.password(size=64, class="form-control form-control-md", id="password")}}
                 <label class="form-label" for="password">Password</label>
               </div>
 
-
             <div class="form-check">
-                <!-- <input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
                 {{ form.remember_me(size=64, class="form-check-input", id="remember_me")}}
                 <label class="form-check-label" for="remember_me">Remember me</label>
             </div>
 
             <div class="d-flex justify-content-center">
-              <!-- <button type="button" class="btn btn-outline-primary btn-lg">Login</button> -->
               {{ form.submit(size=64, class="btn btn-outline-primary btn-lg")}}
             </div>
             <p class="text-center mt-3">Don't have an account? <a href="{{ url_for('register') }}">Sign up</a></p>

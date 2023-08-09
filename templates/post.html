@@ -6,9 +6,7 @@
           <p class="card-subtitle text-muted px-1">{{post.timestamp.strftime('%d %B %Y %I:%M %p')}}</p>
           <p class="card-text lead my-1">{{post.title}}</p>
           <img src="{{url_for('static', filename='images/{}'.format(post.image))}}" class="img-fluid" alt="Post Image">
-          <!-- <img src="{{url_for('static', filename='images/{{ post.image }}')}}" class="img-fluid" alt="Post Image"> -->
           <p class="card-text mt-3">{{post.body}}</p>
-          <!-- <div class="d-flex justify-content-between align-items-center"> -->
             <div class="d-flex flex-row justify-content-between">
               <div class="div">
                 <a href="{{url_for('like', post_id=post.id)}}"><i class="fa-sharp fa-solid fa-thumbs-up"></i></a>
@@ -20,7 +18,6 @@
               <b>{{post.comments | length}}</b>
               </div>
             </div>
-          <!-- </div> -->
         </div>
       </div>
     </div>
